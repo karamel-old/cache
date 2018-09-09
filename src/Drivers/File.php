@@ -51,10 +51,10 @@ class File implements ICache
 
         $data = unserialize(file_get_contents($this->getCachePath($cache_key)));
 
-        if ($data['expire'] < time()) {
+  /*      if ($data['expire'] < time()) {
             $this->del($key);
             return $default;
-        }
+        }*/
 
         return unserialize($data['content']);
 

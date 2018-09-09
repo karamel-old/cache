@@ -23,13 +23,13 @@ class CacheFactory implements ICacheFactory
 
         $class = null;
         switch ($type) {
-            case 'file':
+            case 'File':
                 return new File($host, $port, $prefix);
                 break;
-            case 'memcache':
+            case 'Memcache':
                 return new Memcache($host, $port, $prefix);
                 break;
-            case 'redis':
+            case 'Redis':
                 return new Redis($host, $port, $prefix);
             default:
                 throw new CacheDriverClassNotFoundException();
