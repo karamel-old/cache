@@ -31,18 +31,6 @@ class File implements ICache
 
     }
 
-    private function getCachePath($filename = null)
-    {
-        if (strpos($this->host, '/') == (strlen($this->host) - 1))
-            return $filename === null ? $this->host : $this->host . $filename;
-        return $filename === null ? $this->host . '/' : $this->host . '/' . $filename;
-    }
-
-    private function getCacheKey($key)
-    {
-        return 'karamel_cache_' . md5($key) . '-' . md5($this->prefix . $key);
-    }
-
     public function get($key, $default = null)
     {
         $cache_key = $this->getCacheKey($key);
@@ -51,13 +39,25 @@ class File implements ICache
 
         $data = unserialize(file_get_contents($this->getCachePath($cache_key)));
 
-  /*      if ($data['expire'] < time()) {
-            $this->del($key);
-            return $default;
-        }*/
+        /*      if ($data['expire'] < time()) {
+                  $this->del($key);
+                  return $default;
+              }*/
 
         return unserialize($data['content']);
 
+    }
+
+    private function getCacheKey($key)
+    {
+        return 'karamel_cache_' . md5($key) . '-' . md5($this->prefix . $key);
+    }
+
+    private function getCachePath($filename = null)
+    {
+        if (strpos($this->host, '/') == (strlen($this->host) - 1))
+            return $filename === null ? $this->host : $this->host . $filename;
+        return $filename === null ? $this->host . '/' : $this->host . '/' . $filename;
     }
 
     public function set($key, $value, $expire = null)

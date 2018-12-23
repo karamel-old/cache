@@ -1,3 +1,6 @@
 <?php
+
 namespace Karamel\Cache\Exceptions;
-class CacheDriverClassNotFoundException extends  \Exception{}
+class CacheDriverClassNotFoundException extends \Exception
+{
+}

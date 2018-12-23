@@ -20,6 +20,18 @@ class Memcache implements ICache
     }
 
     /**
+     * @param $key
+     * @param null $default
+     * @return mixed|null
+     * @throws CacheDriverConnectionFailedException
+     */
+    public function get($key, $default = null)
+    {
+        $value = $this->connect()->get($this->prefix . $key);
+        return $value == false ? $default : unserialize($value);
+    }
+
+    /**
      * @return \Memcache|null
      * @throws CacheDriverConnectionFailedException
      */
@@ -34,18 +46,6 @@ class Memcache implements ICache
 
         $this->connection = $connection;
         return $this->connection;
-    }
-
-    /**
-     * @param $key
-     * @param null $default
-     * @return mixed|null
-     * @throws CacheDriverConnectionFailedException
-     */
-    public function get($key, $default = null)
-    {
-        $value = $this->connect()->get($this->prefix . $key);
-        return $value == false ? $default : unserialize($value);
     }
 
     /**

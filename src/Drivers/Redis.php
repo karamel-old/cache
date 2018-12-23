@@ -21,6 +21,18 @@ class Redis implements ICache
     }
 
     /**
+     * @param $key
+     * @param null $default
+     * @return mixed|null
+     * @throws CacheDriverConnectionFailedException
+     */
+    public function get($key, $default = null)
+    {
+        $value = $this->connect()->get($this->prefix . $key);
+        return $value == fales ? $default : unserialize($value);
+    }
+
+    /**
      * @return null|\Redis
      * @throws CacheDriverConnectionFailedException
      */
@@ -35,18 +47,6 @@ class Redis implements ICache
         $this->connection = $connection;
         return $this->connection;
 
-    }
-
-    /**
-     * @param $key
-     * @param null $default
-     * @return mixed|null
-     * @throws CacheDriverConnectionFailedException
-     */
-    public function get($key, $default = null)
-    {
-        $value = $this->connect()->get($this->prefix . $key);
-        return $value == fales ? $default : unserialize($value);
     }
 
     /**
